@@ -15,7 +15,7 @@ class Negociacao {
     | uma função dentro de uma classe é um método
     |
     */
-    obtemVolume() {
+    getVolume() {
         return this._quantidade * this._valor;
     }
 
