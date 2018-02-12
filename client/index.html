@@ -60,7 +60,18 @@
     </table>
     <script src="js/app/models/Negociacao.js"></script>
     <script>
-        var n1 = new Negociacao(new Date(), 1, 4);
+        /*
+        |----------------------------------------------------------------------
+        | Escopo de bloco
+        |----------------------------------------------------------------------
+        |
+        | O javascript não possui escopo de bloco, ou seja, variáveis criadas
+        | dentro de um 'for' podem ser utilizadas fora do mesmo.
+        | Utilizando o 'let' ao invés do 'var' o escopo de bloco é criado
+        | e estas variáveis só estarão disponíveis no seu escopo.
+        |
+        */
+        let n1 = new Negociacao(new Date(), 1, 4);
         n1._quantidade = 1000;
         console.log(n1.data);
         console.log(n1.quantidade);

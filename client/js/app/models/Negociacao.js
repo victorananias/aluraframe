@@ -26,6 +26,8 @@ class Negociacao {
         |
         | Como o nome diz, ele 'congela' o objeto,
         | impedindo que o mesmo seja alterado.
+        | No entanto, ele é shallow(raso), ele não congela propriedades em
+        | camadas mais profundas, como em objetos.
         |
         */
         Object.freeze(this);
