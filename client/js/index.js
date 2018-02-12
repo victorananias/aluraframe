@@ -21,9 +21,9 @@ document.querySelector(".form").addEventListener("submit", function(event) {
     | evento.preventDefault()
     |--------------------------------------------------------------------------
     |
-    | cancela o evento,
-    | neste caso ele impede que o formulário seja submetido
-    | sem ele, o tbody não será atualizado ao submeter
+    | Cancela o evento.
+    | Neste caso, impede que o formulário seja submetido.
+    | Sem esta prevenção, o tbody não será atualizado no submit.
     |
     */
     event.preventDefault();

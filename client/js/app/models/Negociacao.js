@@ -7,8 +7,11 @@ class Negociacao {
         | Programação Defensiva
         |----------------------------------------------------------------------
         |
-        | o new Date está 'clonando' a data
-        | impedindo que ela seja alterada fora da classe
+        | Objetos dentro da classe congelada que possuem funções de alteração
+        | como o seDate()
+        | podem ser alterados através delas.
+        | O new Date está 'clonando' o objeto data,
+        | impedindo que ela seja alterada fora da classe.
         |
         */
         this._data = new Date(data.getTime());
@@ -21,8 +24,8 @@ class Negociacao {
         | Object.freeze(objeto)
         |----------------------------------------------------------------------
         |
-        | como o nome diz 'congela' o objeto
-        | impedindo que seja alterado
+        | Como o nome diz, ele 'congela' o objeto,
+        | impedindo que o mesmo seja alterado.
         |
         */
         Object.freeze(this);
@@ -33,8 +36,8 @@ class Negociacao {
     | Métodos e Funções
     |--------------------------------------------------------------------------
     |
-    | uma função fora de uma classe é uma função
-    | uma função dentro de uma classe é um método
+    | Uma função fora de uma classe é uma função,
+    | uma função dentro de uma classe é um método!
     |
     */
     get volume() {
@@ -46,9 +49,9 @@ class Negociacao {
     | private
     |--------------------------------------------------------------------------
     |
-    | até o momento o javascript não suporta variáveis private
-    | por isso será utilizada a convenção '_variavel' para "avisar"
-    | que a variável é privada
+    | Até o momento o javascript não suporta variáveis private.
+    | Por conta disso, será utilizada a convenção '_variavel' para "avisar"
+    | que a mesma é privada.
     |
     */
 
