@@ -15,7 +15,7 @@ class Negociacao {
     | uma função dentro de uma classe é um método
     |
     */
-    getVolume() {
+    get volume() {
         return this._quantidade * this._valor;
     }
 
@@ -30,15 +30,15 @@ class Negociacao {
     |
     */
 
-    getData() {
+    get data() {
         return this._data;
     }
 
-    getQuantidade() {
+    get quantidade() {
         return this._quantidade;
     }
 
-    getValor() {
+    get valor() {
         return this._valor;
     }
 }
