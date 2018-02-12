@@ -1,10 +1,30 @@
 class Negociacao {
 
     constructor(data, quantidade, valor) {
-        this._data = data;
+
+        /*
+        |----------------------------------------------------------------------
+        | Programação Defensiva
+        |----------------------------------------------------------------------
+        |
+        | o new Date está 'clonando' a data
+        | impedindo que ela seja alterada fora da classe
+        |
+        */
+        this._data = new Date(data.getTime());
+
         this._quantidade = quantidade;
         this._valor = valor;
 
+        /*
+        |----------------------------------------------------------------------
+        | Object.freeze(objeto)
+        |----------------------------------------------------------------------
+        |
+        | como o nome diz 'congela' o objeto
+        | impedindo que seja alterado
+        |
+        */
         Object.freeze(this);
     }
 
@@ -33,7 +53,7 @@ class Negociacao {
     */
 
     get data() {
-        return this._data;
+        return new Date(this._data.getTime());
     }
 
     get quantidade() {
