@@ -6,7 +6,15 @@ var campos = [
 
 var tbody = document.querySelector("table tbody");
 
-document.querySelector(".form").addEventLis tener("submit", function(event) {
+/*
+|--------------------------------------------------------------------------
+| querySelector(elemento)
+|--------------------------------------------------------------------------
+|
+| 'pega' o elemento html
+|
+*/
+document.querySelector(".form").addEventListener("submit", function(event) {
 
     /*
     |--------------------------------------------------------------------------
