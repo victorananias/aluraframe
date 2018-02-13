@@ -24,46 +24,29 @@ class NegociacaoController {
         | evita que o mesmo seja percorrido toda vez que uma função for chamada.
         |
         */
-        this.data = $("#data");
-        this.quantidade = $("#quantidade");
-        this.valor = $("#valor");
+        this._inputData = $("#data");
+        this._inputQuantidade = $("#quantidade");
+        this._inputValor = $("#valor");
+        this._listaNegociacoes = new ListaNegociacoes();
     }
 
     adicionar(evento) {
         evento.preventDefault();
+        this._listaNegociacoes.adiciona(this._criaNegociacao());
+        this._limparCampos();
+    }
 
-        let negociacao = new Negociacao(
-            /*
-            |----------------------------------------------------------------------
-            | map()
-            |----------------------------------------------------------------------
-            |
-            | Este método retorna um callback que percorre o array e permite fazer
-            | alterações no mesmo
-            |
-            */
-            /*
-            |----------------------------------------------------------------------
-            | Spread Operador (...)
-            |----------------------------------------------------------------------
-            |
-            | Os ... 'espalham' cada item do array como parâmetro da função.
-            |
-            */
-            new Date(...this.data.value.split("-").map(
-                /*
-                |----------------------------------------------------------------------
-                | Arrow functions
-                |----------------------------------------------------------------------
-                |
-                | Nome dado a sintáxe de funções que são definidas com '=>'.
-                | Neste caso não há {} nem 'return' pois a mesma possui somente uma instrução.
-                |
-                */
-                (item, indice) => item - indice % 2)
-            ),
-            this.quantidade.value,
-            this.valor.value
+    _criaNegociacao() {
+        return new Negociacao(
+            DataHelper.textoParaData(this._inputData.value),
+            this._inputQuantidade.value,
+            this._inputValor.value
         );
+    }
+
+    _limparCampos() {
+        this._inputData.value = "";
+        this._inputQuantidade.value = 1;
+        this._inputValor.value = 0;
     }
 }
