@@ -42,7 +42,15 @@ class NegociacaoController {
             | alterações no mesmo
             |
             */
-            new Date(this.data.value.split("-").map(
+            /*
+            |----------------------------------------------------------------------
+            | Spread Operador (...)
+            |----------------------------------------------------------------------
+            |
+            | Os ... 'espalham' cada item do array como parâmetro da função.
+            |
+            */
+            new Date(...this.data.value.split("-").map(
                 /*
                 |----------------------------------------------------------------------
                 | Arrow functions
