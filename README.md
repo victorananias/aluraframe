@@ -1,2 +1,3 @@
 # JavaScript-ES6-POO
-Curso da Alura
+Curso de JavaScript avançado da Alura
+__aluraframe__
