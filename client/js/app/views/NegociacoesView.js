@@ -1,10 +1,6 @@
-class NegociacoesView {
+class NegociacoesView extends View {
 
-    constructor(elemento) {
-        this._elemento = elemento;
-    }
-
-    _template(model) {
+    template(model) {
         /*
         |--------------------------------------------------
         | Arrow Functions
@@ -50,17 +46,5 @@ class NegociacoesView {
                         </td>
                     </tfoot>
                 </table>`;
-    }
-
-    update(model) {
-        /*
-        |----------------------------------------------------------------------
-        | innerHTML
-        |----------------------------------------------------------------------
-        |
-        | É a referência do HTML interior do elemento.
-        |
-        */
-        this._elemento.innerHTML = this._template(model);
     }
 }
