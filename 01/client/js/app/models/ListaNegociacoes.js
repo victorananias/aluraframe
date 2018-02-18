@@ -1,11 +1,23 @@
 class ListaNegociacoes {
 
-    constructor() {
+    constructor(negociacaoCtrl, armadilha) {
         this._negociacoes = [];
+        this.negociacaoCtrl = negociacaoCtrl;
+        this.armadilha = armadilha;
     }
 
     adiciona(negociacao) {
         this._negociacoes.push(negociacao);
+        /*
+        |----------------------------------------------------------------------
+        | Reflect.apply(função, contexto, ['parametros'])
+        |----------------------------------------------------------------------
+        |
+        | Este método executa uma função em um determinado
+        | contexto com os parâmetros especificados
+        |
+        */
+        Reflect.apply(this.armadilha, this.negociacaoCtrl, [this]);
     }
 
     get negociacoes() {
@@ -26,5 +38,6 @@ class ListaNegociacoes {
 
     esvaziar() {
         this._negociacoes = [];
+        Reflect.apply(this.armadilha, this.negociacaoCtrl, [this]);
     }
 }
