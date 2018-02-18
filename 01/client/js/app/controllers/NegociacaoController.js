@@ -27,10 +27,20 @@ class NegociacaoController {
         this._inputData = $("#data");
         this._inputQuantidade = $("#quantidade");
         this._inputValor = $("#valor");
-        this._listaNegociacoes = new ListaNegociacoes(this,
-            function(contexto, modelo) {
-                this._negociacoesView.update(this._listaNegociacoes);
-            }
+        this._listaNegociacoes = new ListaNegociacoes(
+            /*
+            |----------------------------------------------------------------------
+            | Arrow functions
+            |----------------------------------------------------------------------
+            |
+            | Possuem um 'lexical scope', isto é, seu 'this'/contexto é definido
+            | no momento em que são definidas. Já em function(){} o 'this'/contexto
+            | é definido na execução.
+            | Caso fosse utilizado a sintaxe function(){}, _negociacoesView não seria encontrada,
+            | pois nao existe no contexto da classe ListaNegociacoes. 
+            |
+            */
+            modelo => this._negociacoesView.update(this._listaNegociacoes);
         );
         this._mensagemView = new MensagemView($("#mensagemView"));
         this._negociacoesView = new NegociacoesView($("#negociacoesView"));
