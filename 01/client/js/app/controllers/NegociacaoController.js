@@ -27,21 +27,54 @@ class NegociacaoController {
         this._inputData = $("#data");
         this._inputQuantidade = $("#quantidade");
         this._inputValor = $("#valor");
-        this._listaNegociacoes = new ListaNegociacoes(
+
+        let self = this;
+
+        /*
+        |----------------------------------------------------------------------
+        | Proxy(target, handlers)
+        |----------------------------------------------------------------------
+        |
+        | Proxy é como uma camada adicionada ao objeto target. Os handlers
+        | ficam entre a camada e o objeto. Quando o proxy for chamado os handlers
+        | executam ações definidas, "traps";
+        |
+        */
+        this._listaNegociacoes = new Proxy(new ListaNegociacoes(), {
             /*
             |----------------------------------------------------------------------
-            | Arrow functions
+            | get(target, prop, receiver)
             |----------------------------------------------------------------------
             |
-            | Possuem um 'lexical scope', isto é, seu 'this'/contexto é definido
-            | no momento em que são definidas. Já em function(){} o 'this'/contexto
-            | é definido na execução.
-            | Caso fosse utilizado a sintaxe function(){}, _negociacoesView não seria encontrada,
-            | pois nao existe no contexto da classe ListaNegociacoes. 
+            | target: o objeto clonado
+            | prop: nome da propriedade
+            | receiver: proxy do objeto
+            |
+            | Métodos são variáveis dentro de objetos que armazenam funções, ou seja,
+            | o get declarado diretamente como função é o mesmo que 'get: function(){}'
+            | EXISTE TAMBEM O MÉTODO set
             |
             */
-            modelo => this._negociacoesView.update(this._listaNegociacoes);
-        );
+            get(target, prop, receiver) {
+                if(["adicionar", "esvaziar"].includes(prop) && typeof(target[prop]) == typeof(Function)) {
+                    return function() {
+                        /*
+                        |----------------------------------------------------------------------
+                        | Reflect.apply(função, contexto, ['parametros'])
+                        |----------------------------------------------------------------------
+                        |
+                        | Este método executa uma função em um determinado
+                        | contexto com os parâmetros especificados
+                        |
+                        */
+                        Reflect.apply(target[prop], target, arguments);
+                        self._negociacoesView.update(target);
+                    }
+                }
+                return Reflect.get(target, prop, receiver);
+            }
+        });
+
         this._mensagemView = new MensagemView($("#mensagemView"));
         this._negociacoesView = new NegociacoesView($("#negociacoesView"));
         this._negociacoesView.update(this._listaNegociacoes);
@@ -49,7 +82,7 @@ class NegociacaoController {
 
     adicionar(evento) {
         evento.preventDefault();
-        this._listaNegociacoes.adiciona(this._criarNegociacao());
+        this._listaNegociacoes.adicionar(this._criarNegociacao());
         this._limparCampos();
         this._mensagemView.update("Negociação realizada com sucesso!!");
     }
