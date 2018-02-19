@@ -28,21 +28,22 @@ class NegociacaoController {
         this._inputQuantidade = $("#quantidade");
         this._inputValor = $("#valor");
 
-        this._negociacoesView = new NegociacoesView($("#negociacoesView"));
-        this._listaNegociacoes = ProxyFactory.create(
+        this._listaNegociacoes = new Bind(
             new ListaNegociacoes(),
-            model => this._negociacoesView.update(model), // Adicionando callback que executará a função update
-            ["adicionar", "esvaziar"]);
-
+            new NegociacoesView($("#negociacoesView")),
+            "adicionar", "esvaziar"
+        );
+        this._mensagem = new Mensagem();
         this._mensagemView = new MensagemView($("#mensagemView"));
-        this._negociacoesView.update(this._listaNegociacoes);
+        this._mensagemView.update(this._mensagem);
     }
 
     adicionar(evento) {
         evento.preventDefault();
         this._listaNegociacoes.adicionar(this._criarNegociacao());
         this._limparCampos();
-        this._mensagemView.update("Negociação realizada com sucesso!!");
+        this._mensagem.texto = "Negociação realizada com sucesso";
+        this._mensagemView.update(this._mensagem);
     }
 
     _criarNegociacao() {
@@ -61,5 +62,7 @@ class NegociacaoController {
 
     apagar() {
         this._listaNegociacoes.esvaziar();
+        this._mensagem.texto = "Lista de negociações esvaziada";
+        this._mensagemView.update(this._mensagem);
     }
 }
