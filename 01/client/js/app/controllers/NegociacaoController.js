@@ -28,55 +28,13 @@ class NegociacaoController {
         this._inputQuantidade = $("#quantidade");
         this._inputValor = $("#valor");
 
-        let self = this;
-
-        /*
-        |----------------------------------------------------------------------
-        | Proxy(target, handlers)
-        |----------------------------------------------------------------------
-        |
-        | Proxy é como uma camada adicionada ao objeto target. Os handlers
-        | ficam entre a camada e o objeto. Quando o proxy for chamado os handlers
-        | executam ações definidas, "traps";
-        |
-        */
-        this._listaNegociacoes = new Proxy(new ListaNegociacoes(), {
-            /*
-            |----------------------------------------------------------------------
-            | get(target, prop, receiver)
-            |----------------------------------------------------------------------
-            |
-            | target: o objeto clonado
-            | prop: nome da propriedade
-            | receiver: proxy do objeto
-            |
-            | Métodos são variáveis dentro de objetos que armazenam funções, ou seja,
-            | o get declarado diretamente como função é o mesmo que 'get: function(){}'
-            | EXISTE TAMBEM O MÉTODO set
-            |
-            */
-            get(target, prop, receiver) {
-                if(["adicionar", "esvaziar"].includes(prop) && typeof(target[prop]) == typeof(Function)) {
-                    return function() {
-                        /*
-                        |----------------------------------------------------------------------
-                        | Reflect.apply(função, contexto, ['parametros'])
-                        |----------------------------------------------------------------------
-                        |
-                        | Este método executa uma função em um determinado
-                        | contexto com os parâmetros especificados
-                        |
-                        */
-                        Reflect.apply(target[prop], target, arguments);
-                        self._negociacoesView.update(target);
-                    }
-                }
-                return Reflect.get(target, prop, receiver);
-            }
-        });
+        this._negociacoesView = new NegociacoesView($("#negociacoesView"));
+        this._listaNegociacoes = ProxyFactory.create(
+            new ListaNegociacoes(),
+            model => this._negociacoesView.update(model), // Adicionando callback que executará a função update
+            ["adicionar", "esvaziar"]);
 
         this._mensagemView = new MensagemView($("#mensagemView"));
-        this._negociacoesView = new NegociacoesView($("#negociacoesView"));
         this._negociacoesView.update(this._listaNegociacoes);
     }
 
