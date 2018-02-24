@@ -68,17 +68,13 @@ class NegociacaoController {
     }
 
     importar() {
-        new NegociacaoService((erro, negociacoes) => {
-            if(erro) {
-                this._mensagem.texto = erro;
-                return;
-            }
-            else {
+        new NegociacaoService().buscarNegociacoes().then(negociacoes => {
                 negociacoes.forEach(negociacao => {
                     this._listaNegociacoes.adicionar(negociacao);
                     this._mensagem.texto = "Negociações Importadas.";
                 });
             }
-        }).buscarNegociacoes();
+        )
+        .catch(erro => this._mensagem.texto = erro)
     }
 }

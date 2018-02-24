@@ -1,0 +1,6 @@
+class HttpService {
+
+    get(url) {
+        
+    }
+}

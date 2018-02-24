@@ -8,6 +8,17 @@
     <script>
 
         let ok = false;
+        /*
+        |----------------------------------------------------------------------
+        | Promise
+        |----------------------------------------------------------------------
+        |
+        | Criando nova instância de Promise. Os métodos 'resolve()' e 'reject()'
+        | podem reber um resultado para que na chamada da Promise seja
+        | executado o 'then' caso tudo aconteça como planejado
+        | caso contrário o 'catch' pegará o erro.
+        |
+        */
         let promise = new Promise((resolve, reject) => {
             setTimeout(() => {
                 if(ok)
@@ -19,7 +30,12 @@
 
         promise.then(resultado => console.log(resultado))
         .catch(erro => console.log(erro));
-
+        /*
+        |
+        | O código abaixo da Promise continua a ser executado mesmo que o resultado
+        | ainda não tenha sido recebido.
+        |
+        */
         console.log("FIM");
     </script>
 </body>
