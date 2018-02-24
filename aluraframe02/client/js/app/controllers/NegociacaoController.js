@@ -68,8 +68,25 @@ class NegociacaoController {
     }
 
     importar() {
-        new NegociacaoService().buscarNegociacoes().then(negociacoes => {
-                negociacoes.forEach(negociacao => {
+        let service = new NegociacaoService();
+        /*
+        |----------------------------------------------------------------------
+        | Promise.all()
+        |----------------------------------------------------------------------
+        |
+        | Recebe um array de promises, o seu método then() retorna um array de
+        | respostas. O seu catch irá retornar o primeor erro que ocorrer.
+        | Promises podem são utilizadas para evitar a 'pyramid of doom',
+        | onde é formada uma piramide de callbacks que dependem um do outro.
+        |
+        */
+        Promise.all([
+            service.buscarNegociacoesSemana(),
+            service.buscarNegociacoesSemanaAnterior(),
+            service.buscarNegociacoesSemanaRetrasada()
+        ])
+        .then(lista => {
+                lista.reduce((arrayFlatten, negociacoes) => arrayFlatten.concat(negociacoes)).forEach(negociacao => {
                     this._listaNegociacoes.adicionar(negociacao);
                     this._mensagem.texto = "Negociações Importadas.";
                 });
