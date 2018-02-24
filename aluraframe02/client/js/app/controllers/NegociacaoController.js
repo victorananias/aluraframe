@@ -45,7 +45,7 @@ class NegociacaoController {
         evento.preventDefault();
         this._listaNegociacoes.adicionar(this._criarNegociacao());
         this._limparCampos();
-        this._mensagem.texto = "Negociação realizada com sucesso";
+        this._mensagem.texto = "Negociação realizada com sucesso.";
     }
 
     _criarNegociacao() {
@@ -64,6 +64,21 @@ class NegociacaoController {
 
     apagar() {
         this._listaNegociacoes.esvaziar();
-        this._mensagem.texto = "Lista de negociações esvaziada";
+        this._mensagem.texto = "Lista de negociações esvaziada.";
+    }
+
+    importar() {
+        new NegociacaoService((erro, negociacoes) => {
+            if(erro) {
+                this._mensagem.texto = erro;
+                return;
+            }
+            else {
+                negociacoes.forEach(negociacao => {
+                    this._listaNegociacoes.adicionar(negociacao);
+                    this._mensagem.texto = "Negociações Importadas.";
+                });
+            }
+        }).buscarNegociacoes();
     }
 }
