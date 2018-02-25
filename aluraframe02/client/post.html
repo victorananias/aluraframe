@@ -27,52 +27,33 @@
         <button class="btn btn-primary" type="submit" onclick="sendPost(event)">Enviar dados para servidor</button>
     </form>
 
+    <script src="js/app/services/HttpService.js"></script>
     <script>
-
         function sendPost(event) {
 
             event.preventDefault();
 
-            let data = document.querySelector("#data").value;
-            let quantidade = document.querySelector("#quantidade").value;
-            let valor = document.querySelector("#valor").value;
+            let data = document.querySelector("#data");
+            let quantidade = document.querySelector("#quantidade");
+            let valor = document.querySelector("#valor");
 
-            let xhr = new XMLHttpRequest();
+            let http = new HttpService();
 
-            xhr.open("POST", "http://127.0.0.1:3000/negociacoes");
+            let dados = {
+                "data" : data.value,
+                "quantidade" : quantidade.value,
+                "valor"      : valor.value
+            };
 
-            xhr.setRequestHeader("Content-type", "application/json", true);
-
-            /*
-            |------------------------------------------------------------------
-            | JSON.stringify()
-            |------------------------------------------------------------------
-            |
-            | Converte o objeto JavaScript para JSON.
-            |
-            */
-            let json = JSON.stringify({
-                "data" : data,
-                "quantidade" : quantidade,
-                "valor"      : valor
+            http.post("http://127.0.0.1:3000/negociacoes", dados)
+            .then(() => {
+                    data.value = '';
+                    quantidade.value = 1;
+                    valor.value = 0.0;
+                    data.focus();
+                alert('Negociação enviada com sucesso');
             });
 
-            xhr.send(json);
-            /*
-            |------------------------------------------------------------------
-            | onreadystatechange
-            |------------------------------------------------------------------
-            |
-            | O ultimo parâmetro define se a requisição será assíncrona ou síncrona,
-            | ou seja, se o JS deve ou não esperar a resposta do servidor antes
-            | de voltar a ser executado.
-            |
-            */
-            xhr.onreadystatechange = function() {
-                if(xhr.readyState == 4 && xhr.status == 200) {
-                    alert(xhr.responseText);
-                }
-            }
         }
     </script>
 </body>

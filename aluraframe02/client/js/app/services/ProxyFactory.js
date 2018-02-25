@@ -7,9 +7,9 @@ class ProxyFactory {
         | Proxy(target, handlers)
         |----------------------------------------------------------------------
         |
-        | Proxy é como uma camada adicionada ao objeto target. Os handlers
-        | ficam entre a camada e o objeto. Quando o proxy for chamado os handlers
-        | executam ações definidas, "traps";
+        | Proxy é como uma camada adicionada ao objeto(target). Os handlers
+        | ficam entre a camada e o objeto. Quando métodos ou atríbutos do proxy
+        | forem chamados os handlers executam ações definidas (traps);
         |
         */
         return new Proxy(objeto, {
@@ -19,7 +19,7 @@ class ProxyFactory {
             |----------------------------------------------------------------------
             |
             | target: o objeto clonado
-            | prop: nome da propriedade
+            | prop: nome da propriedade(atributo ou função do objeto)
             | receiver: proxy do objeto
             |
             | Métodos são variáveis dentro de objetos que armazenam funções, ou seja,
