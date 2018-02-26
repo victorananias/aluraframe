@@ -17,6 +17,7 @@ var ConnectionFactory = (function() {
     |----------------------------------------------------------------------
     |
     | Objetos podem ter seus atributos alterados mesmo sendo const.
+    | const não garante imutabilidade, apenas que um novo valor não seja atribuido.
     |
     */
 
