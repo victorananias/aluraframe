@@ -41,6 +41,13 @@ class NegociacaoController {
             new MensagemView($("#mensagemView")),
             "texto"
         );
+
+        ConnectionFactory.getConnection()
+        .then(conexao => new NegociacaoDao(conexao))
+        .then(dao => dao.listarTodos())
+        .then(negociacoes => negociacoes.forEach(
+            negociacao => this._listaNegociacoes.adicionar(negociacao)))
+        .catch(erro => this._mensagem.texto = erro);
     }
 
     adicionar(evento) {
@@ -48,13 +55,12 @@ class NegociacaoController {
         ConnectionFactory.getConnection()
         .then(conexao => new NegociacaoDao(conexao)
         .adicionar(this._criarNegociacao())
-        .then(() => {
+        .then(mensagem => {
             this._listaNegociacoes.adicionar(this._criarNegociacao());
-            this._limparCampos(); 
-            this._mensagem.texto = "Negociação realizada com sucesso.";
+            this._mensagem.texto = mensagem;
+            this._limparCampos();
         }))
         .catch(erro => this._mensagem.texto = erro);
-        
     }
 
     _criarNegociacao() {
@@ -72,8 +78,17 @@ class NegociacaoController {
     }
 
     apagar() {
-        this._listaNegociacoes.esvaziar();
-        this._mensagem.texto = "Lista de negociações esvaziada.";
+        ConnectionFactory.getConnection()
+        .then(conexao => new NegociacaoDao(conexao))
+        .then(dao => dao.apagarTodos())
+        .then(mensagem => {
+            this._mensagem.texto = mensagem;
+            this._listaNegociacoes.esvaziar();
+        })
+        .catch(erro => {
+            this._mensagem.texto = erro;
+            this._listaNegociacoes.esvaziar();
+        });
     }
 
     importar() {
