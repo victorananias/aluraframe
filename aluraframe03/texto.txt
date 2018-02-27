@@ -1,0 +1,5 @@
+Variáveis apontam para um local na memória. Assim sendo, no JavaScript,
+ao comparar objetos é comparado o local apontado na memória e não o conteúdo do objeto,
+ou seja, a comparação de duas variáveis objetos com o mesmo conteudo porém apontando para locais diferentes
+irá retornar false.
+Os tipos primiticos também são como objetos, porém na comparação é comparado o seu valor.
