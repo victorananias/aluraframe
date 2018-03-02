@@ -1,17 +1,5 @@
 class NegociacaoDao {
 
-<<<<<<< HEAD
-    constructor(conexao, banco) {
-
-    }
-
-    adiciona(negocicao) {
-
-    }
-
-    apaga() {
-
-=======
     constructor(conexao) {
         this._conexao = conexao;
         this._banco   = "negociacoes";
@@ -82,6 +70,5 @@ class NegociacaoDao {
                 reject('Não foi possível remover as negociações');
             }
         });
->>>>>>> 586ffdafc6c3049302ac7d5da58d4ca7ec02d59f
     }
 }
