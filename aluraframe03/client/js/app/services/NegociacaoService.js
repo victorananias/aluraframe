@@ -113,20 +113,7 @@ class NegociacaoService {
                     |
                     */
                     !listaAtual.some(negociacaoExistente =>
-                        /*
-                        |--------------------------------------------------------------
-                        | Comparando Objetos
-                        |--------------------------------------------------------------
-                        |
-                        | Variaveis apontam para valores na memoria,
-                        | toda variavel em js é uma especie de objeto,
-                        | Na comaparação de variáveis te tipos literáis(primitivos) é comparado o seu valor.
-                        | No entanto, Na comparação de objetos é comparado o local na memória para onde a variável aponta.
-                        | Para comparar dois objetos é necessário converte-lo para texto.
-                        | Serialize
-                        |
-                        */
-                        JSON.stringify(negociacaoExistente) == JSON.stringify(negociacao))))
+                        negociacaoExistente.isEquals(negociacao))))
             .catch(erro => {
                 throw new Error(erro);
             })

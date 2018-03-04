@@ -63,7 +63,7 @@ class NegociacaoController {
                 this._listaNegociacoes.adicionar(negociacao)))
             .catch(erro => this._mensagem.texto = erro);
 
-        setTimeout(() => this.importar(), 3000);
+        setInterval(() => this.importar(), 3000);
     }
 
     adicionar(evento) {
