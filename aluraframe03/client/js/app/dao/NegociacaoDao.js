@@ -17,7 +17,7 @@ class NegociacaoDao {
 
 
             request.onsuccess = event => {
-                resolve("Negociação cadastrada.");
+                resolve("Negociação adicionada com sucesso.");
             }
             request.onerror = event => {
                 console.log(event.target.error.name);
@@ -44,7 +44,6 @@ class NegociacaoDao {
                 else {
                  // quando não há mais objects em nossa store.
                  // Isso significa que já terminados de popular negociacoes
-                    console.log(negociacoes);
                     resolve(negociacoes);
                 }
             }

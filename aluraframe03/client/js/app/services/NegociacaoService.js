@@ -61,4 +61,75 @@ class NegociacaoService {
             throw new Error(erro);
         });
     }
+
+    cadastra(negociacao) {
+        return ConnectionFactory.getConnection()
+            .then(conexao => new NegociacaoDao(conexao))
+            .then(dao => dao.adicionar(negociacao))
+            .catch(erro => {
+                throw new Error(erro);
+            });
+    }
+
+    apagarTodas() {
+        return ConnectionFactory.getConnection()
+            .then(conexao => new NegociacaoDao(conexao))
+            .then(dao => dao.apagarTodos())
+            .catch(erro => {
+                throw new Error(erro);
+            });
+    }
+
+    listar() {
+        return ConnectionFactory.getConnection()
+            .then(conexao => new NegociacaoDao(conexao))
+            .then(dao => dao.listarTodos())
+            .catch(erro => {
+                throw new Error(erro);
+            });
+    }
+
+    importar(listaAtual) {
+        return this.obterNegociacoes()
+            .then(negociacoes =>
+                /*
+                |--------------------------------------------------------------
+                | array.filter((item) => { return true or false})
+                |--------------------------------------------------------------
+                |
+                | filter() percorre o array verificando se o item deve ou não fazer
+                | parte do novo array que será retornado no final da verificação.
+                |
+                */
+                negociacoes.filter(negociacao =>
+                    /*
+                    |----------------------------------------------------------
+                    | array.some((item) => {})
+                    |----------------------------------------------------------
+                    |
+                    | Permite realizar uma verificação com cada item do array
+                    | se o resultado for true a verificação para e true é retornado,
+                    | caso contrário false.
+                    |
+                    */
+                    !listaAtual.some(negociacaoExistente =>
+                        /*
+                        |--------------------------------------------------------------
+                        | Comparando Objetos
+                        |--------------------------------------------------------------
+                        |
+                        | Variaveis apontam para valores na memoria,
+                        | toda variavel em js é uma especie de objeto,
+                        | Na comaparação de variáveis te tipos literáis(primitivos) é comparado o seu valor.
+                        | No entanto, Na comparação de objetos é comparado o local na memória para onde a variável aponta.
+                        | Para comparar dois objetos é necessário converte-lo para texto.
+                        | Serialize
+                        |
+                        */
+                        JSON.stringify(negociacaoExistente) == JSON.stringify(negociacao))))
+            .catch(erro => {
+                throw new Error(erro);
+            })
+    }
+
 }
