@@ -47,29 +47,29 @@ class NegociacaoController {
         | Promises
         |----------------------------------------------------------------------
         |
-        | Se o then() retorna algo seu retorno estará disponível na próxima
-        | chamada do then()
+        | Se o then() retorna algo é possivel adicionar outro then() que receberá
+        | o seu retorno.
         |
         */
         ConnectionFactory.getConnection()
-        .then(conexao => new NegociacaoDao(conexao))
-        .then(dao => dao.listarTodos())
-        .then(negociacoes => negociacoes.forEach(
-            negociacao => this._listaNegociacoes.adicionar(negociacao)))
-        .catch(erro => this._mensagem.texto = erro);
+            .then(conexao => new NegociacaoDao(conexao))
+            .then(dao => dao.listarTodos())
+            .then(negociacoes => negociacoes.forEach(
+                negociacao => this._listaNegociacoes.adicionar(negociacao)))
+            .catch(erro => this._mensagem.texto = erro);
     }
 
     adicionar(evento) {
         evento.preventDefault();
         ConnectionFactory.getConnection()
-        .then(conexao => new NegociacaoDao(conexao)
-        .adicionar(this._criarNegociacao())
-        .then(mensagem => {
-            this._listaNegociacoes.adicionar(this._criarNegociacao());
-            this._mensagem.texto = mensagem;
-            this._limparCampos();
-        }))
-        .catch(erro => this._mensagem.texto = erro);
+            .then(conexao => new NegociacaoDao(conexao))
+            .then(dao => dao.adicionar(this._criarNegociacao()))
+            .then(mensagem => {
+                this._listaNegociacoes.adicionar(this._criarNegociacao());
+                this._mensagem.texto = mensagem;
+                this._limparCampos();
+            })
+            .catch(erro => this._mensagem.texto = erro);
     }
 
     _criarNegociacao() {
@@ -102,29 +102,13 @@ class NegociacaoController {
 
     importar() {
         let service = new NegociacaoService();
-        /*
-        |----------------------------------------------------------------------
-        | Promise.all()
-        |----------------------------------------------------------------------
-        |
-        | Recebe um array de promises, o seu método then() retorna um array de
-        | respostas. O seu catch irá retornar o primeor erro que ocorrer.
-        | Promises podem são utilizadas para evitar a 'pyramid of doom',
-        | onde é formada uma piramide de callbacks que dependem um do outro.
-        |
-        */
-        Promise.all([
-            service.buscarNegociacoesSemana(),
-            service.buscarNegociacoesSemanaAnterior(),
-            service.buscarNegociacoesSemanaRetrasada()
-        ])
-        .then(lista => {
-                lista.reduce((arrayFlatten, negociacoes) => arrayFlatten.concat(negociacoes)).forEach(negociacao => {
-                    this._listaNegociacoes.adicionar(negociacao);
-                    this._mensagem.texto = "Negociações Importadas.";
-                });
-            }
-        )
+
+        service
+        .obterNegociacoes()
+        .then(negociacoes => {
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adicionar(negociacao));
+            this._mensagem.texto = "Negociações Importadas.";
+        })
         .catch(erro => this._mensagem.texto = erro)
     }
 

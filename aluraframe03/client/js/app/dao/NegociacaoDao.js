@@ -13,7 +13,7 @@ class NegociacaoDao {
             .add(negociacao);
 
             // #### VAI CANCELAR A TRANSAÇÃO. O evento onerror será chamado.
-            transaction.abort();
+            // transaction.abort();
 
 
             request.onsuccess = event => {
