@@ -9,12 +9,11 @@ class Bind {
     |
     */
     constructor(model, view, ...props) {
-        let proxy = ProxyFactory.create(
-            model,
-            model => view.update(model), // Adicionando callback que executará a função update
-            props);
+        let proxy = ProxyFactory.create(model, model => view.update(model), // Adicionando callback que executará a função update
+        props);
 
         view.update(model);
         return proxy;
     }
 }
+//# sourceMappingURL=Bind.js.map

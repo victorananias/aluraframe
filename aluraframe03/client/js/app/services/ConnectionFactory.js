@@ -9,7 +9,7 @@
 | A ConnectionFactory torná-se uma espécie de modulo.
 |
 */
-var ConnectionFactory = (function() {
+var ConnectionFactory = function () {
 
     /*
     |----------------------------------------------------------------------
@@ -39,12 +39,12 @@ var ConnectionFactory = (function() {
 
                 let openRequest = window.indexedDB.open(dbName, version);
 
-                openRequest.onupgradeneeded = (event) => {
+                openRequest.onupgradeneeded = event => {
                     this._createConnection(event.target.result);
-                }
+                };
 
-                openRequest.onsuccess = (event) => {
-                    if(!connection) {
+                openRequest.onsuccess = event => {
+                    if (!connection) {
                         connection = event.target.result;
                         /*
                         |----------------------------------------------------------------------
@@ -58,20 +58,20 @@ var ConnectionFactory = (function() {
                     }
                     connection.close = () => {
                         throw new Error("Você não pode fechar diretamente a conexão.");
-                    }
+                    };
                     resolve(connection);
-                }
+                };
 
-                openRequest.onerror = (event) => {
+                openRequest.onerror = event => {
                     console.log(e.target.error);
                     reject(e.target.error.name);
-                }
+                };
             });
         }
 
         static _createConnection(connection) {
-            stores.forEach((store) => {
-                if(connection.objectStoreNames.contains(store)) connection.deleteObjectStore(store);
+            stores.forEach(store => {
+                if (connection.objectStoreNames.contains(store)) connection.deleteObjectStore(store);
                 connection.createObjectStore(store, { autoIncrement: true });
             });
         }
@@ -80,5 +80,6 @@ var ConnectionFactory = (function() {
             close();
             connection = null;
         }
-    }
-})();
+    };
+}();
+//# sourceMappingURL=ConnectionFactory.js.map

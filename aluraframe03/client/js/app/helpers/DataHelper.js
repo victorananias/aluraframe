@@ -22,8 +22,7 @@ class DataHelper {
         | O test compara a expressão com o texto e retorna true ou false;
         |
         */
-        if(!/^\d{4}-\d{2}-\d{2}$/.test(texto))
-            throw new Error("O formato do texto deve ser yyyy-mm-dd");
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(texto)) throw new Error("O formato do texto deve ser yyyy-mm-dd");
 
         /*
         |----------------------------------------------------------------------
@@ -44,17 +43,16 @@ class DataHelper {
         |
         */
         return new Date(...texto.split("-").map(
-            /*
-            |----------------------------------------------------------------------
-            | Arrow functions
-            |----------------------------------------------------------------------
-            |
-            | Nome dado a sintáxe de funções que são definidas com '=>'.
-            | Neste caso não há {} nem 'return' pois a mesma possui somente uma instrução.
-            |
-            */
-            (item, indice) => item - indice % 2)
-        );
+        /*
+        |----------------------------------------------------------------------
+        | Arrow functions
+        |----------------------------------------------------------------------
+        |
+        | Nome dado a sintáxe de funções que são definidas com '=>'.
+        | Neste caso não há {} nem 'return' pois a mesma possui somente uma instrução.
+        |
+        */
+        (item, indice) => item - indice % 2));
     }
 
     static dataParaTexto(data) {
@@ -68,6 +66,7 @@ class DataHelper {
         | A Template String pode substituir uma String.
         |
         */
-        return `${data.getDate()}/${data.getMonth()+1}/${data.getFullYear()}`;
+        return `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`;
     }
 }
+//# sourceMappingURL=DataHelper.js.map

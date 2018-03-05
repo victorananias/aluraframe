@@ -20,3 +20,4 @@ class View {
         this._elemento.innerHTML = this.template(model);
     }
 }
+//# sourceMappingURL=View.js.map

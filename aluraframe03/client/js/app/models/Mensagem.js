@@ -20,3 +20,4 @@ class Mensagem {
         return this._texto;
     }
 }
+//# sourceMappingURL=Mensagem.js.map

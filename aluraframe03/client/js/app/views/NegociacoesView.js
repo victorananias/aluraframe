@@ -29,14 +29,12 @@ class NegociacoesView extends View {
                     </thead>
 
                     <tbody>
-                        ${model.negociacoes.map( n =>
-                            `<tr>
+                        ${model.negociacoes.map(n => `<tr>
                                 <td>${DataHelper.dataParaTexto(n.data)}</td>
                                 <td>${n.quantidade}</td>
                                 <td>${n.valor}</td>
                                 <td>${n.volume}</td>
-                            </tr>`
-                        ).join("")}
+                            </tr>`).join("")}
                     </tbody>
 
                     <tfoot>
@@ -48,3 +46,4 @@ class NegociacoesView extends View {
                 </table>`;
     }
 }
+//# sourceMappingURL=NegociacoesView.js.map

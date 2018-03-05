@@ -30,17 +30,9 @@ class NegociacaoController {
 
         this._ordemAtual = '';
 
-        this._listaNegociacoes = new Bind(
-            new ListaNegociacoes(),
-            new NegociacoesView($("#negociacoesView")),
-            "adicionar", "esvaziar", "ordenar", "inverterOrdem"
-        );
+        this._listaNegociacoes = new Bind(new ListaNegociacoes(), new NegociacoesView($("#negociacoesView")), "adicionar", "esvaziar", "ordenar", "inverterOrdem");
 
-        this._mensagem = new Bind(
-            new Mensagem(),
-            new MensagemView($("#mensagemView")),
-            "texto"
-        );
+        this._mensagem = new Bind(new Mensagem(), new MensagemView($("#mensagemView")), "texto");
 
         this._service = new NegociacaoService();
 
@@ -57,11 +49,7 @@ class NegociacaoController {
         | o seu retorno.
         |
         */
-        this._service
-            .listar()
-            .then(negociacoes => negociacoes.forEach(negociacao =>
-                this._listaNegociacoes.adicionar(negociacao)))
-            .catch(erro => this._mensagem.texto = erro);
+        this._service.listar().then(negociacoes => negociacoes.forEach(negociacao => this._listaNegociacoes.adicionar(negociacao))).catch(erro => this._mensagem.texto = erro);
 
         setInterval(() => this.importar(), 3000);
     }
@@ -71,22 +59,15 @@ class NegociacaoController {
 
         let negociacao = this._criarNegociacao();
 
-        this._service
-        .cadastra(negociacao)
-            .then(mensagem => {
-                this._listaNegociacoes.adicionar(negociacao);
-                this._mensagem.texto = mensagem;
-                this._limparCampos();
-            })
-            .catch(erro => this._mensagem.texto = erro);
+        this._service.cadastra(negociacao).then(mensagem => {
+            this._listaNegociacoes.adicionar(negociacao);
+            this._mensagem.texto = mensagem;
+            this._limparCampos();
+        }).catch(erro => this._mensagem.texto = erro);
     }
 
     _criarNegociacao() {
-        return new Negociacao(
-            DataHelper.textoParaData(this._inputData.value),
-            this._inputQuantidade.value,
-            this._inputValor.value
-        );
+        return new Negociacao(DataHelper.textoParaData(this._inputData.value), this._inputQuantidade.value, this._inputValor.value);
     }
 
     _limparCampos() {
@@ -96,35 +77,28 @@ class NegociacaoController {
     }
 
     apagar() {
-        this._service
-            .apagar()
-            .then(mensagem => {
-                this._mensagem.texto = mensagem;
-                this._listaNegociacoes.esvaziar();
-            })
-            .catch(erro => {
-                this._mensagem.texto = erro;
-            });
+        this._service.apagar().then(mensagem => {
+            this._mensagem.texto = mensagem;
+            this._listaNegociacoes.esvaziar();
+        }).catch(erro => {
+            this._mensagem.texto = erro;
+        });
     }
 
     importar() {
-        this._service
-            .importar(this._listaNegociacoes.negociacoes)
-            .then(negociacoes => {
-                negociacoes.forEach(negociacao =>
-                this._listaNegociacoes.adicionar(negociacao));
-                this._mensagem.texto = "Negociações Importadas.";
-            })
-            .catch(erro => this._mensagem.texto = erro)
+        this._service.importar(this._listaNegociacoes.negociacoes).then(negociacoes => {
+            negociacoes.forEach(negociacao => this._listaNegociacoes.adicionar(negociacao));
+            this._mensagem.texto = "Negociações Importadas.";
+        }).catch(erro => this._mensagem.texto = erro);
     }
 
     ordenar(coluna) {
-        if(this._ordemAtual == coluna) {
+        if (this._ordemAtual == coluna) {
             this._listaNegociacoes.inverterOrdem();
-        }
-        else {
+        } else {
             this._listaNegociacoes.ordenar((a, b) => a[coluna] - b[coluna]);
             this._ordemAtual = coluna;
         }
     }
 }
+//# sourceMappingURL=NegociacaoController.js.map
