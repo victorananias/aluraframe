@@ -3,6 +3,14 @@ import { View } from './View';
 import { currentInstance } from '../controllers/NegociacaoController';
 
 
+/*
+|----------------------------------------------
+| export e import
+|----------------------------------------------
+|
+| Somente onde foi utilizado o export poderá ser usado o import.
+|
+*/
 export class NegociacoesView extends View {
 
     constructor(elemento) {
