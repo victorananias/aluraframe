@@ -1,3 +1,13 @@
+import { Negociacao } from '../models/Negociacao';
+import { NegociacaoService } from '../services/NegociacaoService';
+import { NegociacaoDao } from '../dao/NegociacaoDao';
+import { ListaNegociacoes } from '../models/ListaNegociacoes';
+import { NegociacoesView } from '../views/NegociacoesView';
+import { Mensagem } from '../models/Mensagem';
+import { MensagemView } from '../views/MensagemView';
+import { Bind } from '../helpers/Bind';
+import { DateHelper } from '../helpers/DateHelper';
+
 class NegociacaoController {
 
     constructor() {
@@ -83,7 +93,7 @@ class NegociacaoController {
 
     _criarNegociacao() {
         return new Negociacao(
-            DataHelper.textoParaData(this._inputData.value),
+            DateHelper.textoParaData(this._inputData.value),
             this._inputQuantidade.value,
             this._inputValor.value
         );
@@ -127,4 +137,12 @@ class NegociacaoController {
             this._ordemAtual = coluna;
         }
     }
+}
+
+let negociacaoController = new NegociacaoController();
+
+export function currentInstance() {
+
+    return negociacaoController;
+
 }
